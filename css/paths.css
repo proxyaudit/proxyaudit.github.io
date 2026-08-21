@@ -1,0 +1,66 @@
+/* =========================================================
+   About/credibility strip + two-path CTA section
+   ========================================================= */
+
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+@media (max-width: 860px) { .about { grid-template-columns: 1fr; } }
+
+.about-lede { font-size: var(--step-1); font-family: var(--font-display); }
+
+.about-meta {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  line-height: 1.9;
+}
+.about-meta dt { color: var(--ink); font-weight: 600; }
+.about-meta dd { margin: 0 0 0.9em; }
+
+.paths {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+@media (max-width: 860px) { .paths { grid-template-columns: 1fr; } }
+
+.path-card {
+  border: 1px solid var(--line);
+  background: var(--white);
+  padding: var(--space-4);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.path-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ochre);
+}
+
+.path-card h3 { font-size: 1.5rem; margin-bottom: 0; }
+
+.path-facts {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-1) 0 var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  display: grid;
+  gap: 0.4em;
+}
+.path-facts li::before { content: "— "; color: var(--line); }
+
+.path-card p:last-of-type { margin-bottom: var(--space-3); }
+
+.path-card .btn { align-self: flex-start; margin-top: auto; }
+
+.path-card.full-audit { border-color: var(--slate-deep); }
