@@ -3,27 +3,173 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ProxyAudit</title>
-  <style>
-    body {
-      max-width: 800px;
-      margin: 80px auto;
-      padding: 0 24px;
-      font-family: system-ui, sans-serif;
-      background: #0d1117;
-      color: #e6edf3;
-    }
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <title>ProxyAudit — Measuring racial bias in image-generation models</title>
+  <meta name="description" content="A legally-grounded, open method for auditing text-to-image models for racial and skin-tone bias, developed at the University of Virginia.">
 
-    h1 {
-      color: #58a6ff;
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/findings.css">
+  <link rel="stylesheet" href="css/paths.css">
 </head>
 <body>
-  <h1>ProxyAudit</h1>
-  <p>
-Under Development
-    
-  </p>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a href="#top" class="wordmark">Proxy<span>Audit</span></a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#method">Method</a>
+        <a href="#findings">Findings</a>
+        <a href="#try-it">Playground</a>
+        <a href="#audit">Full audit</a>
+        <a href="assets/ImageAudit_V6.pdf" target="_blank" rel="noopener">Paper</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero-grid-bg" data-portrait-grid aria-hidden="true"></div>
+      <div class="wrap hero-content">
+        <span class="hero-kicker">A proxy-based auditing method &middot; University of Virginia</span>
+        <h1 class="hero-title">
+          <span class="hero-line hero-prefix" data-hero-prefix>What does a</span>
+          <span class="hero-blank" data-hero-blank>CEO</span>
+          <span class="hero-line">look like ?</span>
+        </h1>
+        <p class="hero-sub">Ask a text-to-image model this question a hundred times, and a pattern appears. How does this pattern compare to U.S demographic data ? We built a method to find out.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#try-it">Test a model <span class="btn-arrow">&rarr;</span></a>
+          <a class="btn btn-secondary" href="#method">Read more about the method</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT / CREDIBILITY ============ -->
+    <section class="section" id="method">
+      <div class="wrap about">
+        <div>
+          <span class="eyebrow">The project</span>
+          <p class="about-lede">ProxyAudit adapts the same "proxy variable" methods used for decades in U.S. employment and housing discrimination law (occupation, geography, and surname) to audit image-generation models for racial and skin-tone bias.</p>
+          <p>Researchers at the University of Virginia built the method, tested it on three image models, and published the results. That research now runs as two open tools: a free classroom demo, and a full audit you can run on any model available on Replicate. The results from any model audited are saved to a public dataset and can be used to compare models.</p>
+          <p><a href="assets/ImageAudit_V6.pdf" target="_blank" rel="noopener">Read the paper &rarr;</a></p>
+        </div>
+        <dl class="about-meta">
+          <dt>Institution</dt>
+          <dd>University of Virginia</dd>
+          <dt>Grounding</dt>
+          <dd>U.S. antidiscrimination law &mdash; Title VII, Fair Housing Act, racial gerrymandering precedent</dd>
+          <dt>What we measured</dt>
+          <dd>AI classified race, skintone (CIELAB value), cosine similarity between images</dd>
+          <dt>Models tested in the paper</dt>
+          <dd>Imagen 4 Fast, Stable Diffusion 3.5 Large Turbo, Flux Schnell</dd>
+          <dt>Proxy categories</dt>
+          <dd>Occupation &middot; Geography &middot; Surname &mdash; 50 prompts each, 100 images per prompt</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============ FINDINGS ============ -->
+    <section class="section" id="findings">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Selected findings</span>
+          <h2>Distance from census demographics, by model</h2>
+          <p>We measure this using Total Variation Distance (TVD) which describes how far a model's output distribution is from the U.S. Census racial distribution for the same prompts. Lower is closer to the census baseline; it is not a score for "fairness" itself.</p>
+        </div>
+
+        <div class="findings-grid">
+          <div class="stat-table">
+            <div class="stat-table-head">
+              <h3>Overall TVD by model</h3>
+              <p>Mean across all 150 prompts, with 95% confidence interval.</p>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-name">Flux Schnell <small>Black Forest Labs</small></div>
+              <div class="stat-value">0.310<small>CI [0.309, 0.320]</small></div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-name">Imagen 4 Fast <small>Google</small></div>
+              <div class="stat-value">0.312<small>CI [0.311, 0.322]</small></div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-name">Stable Diffusion 3.5 Turbo <small>Stability AI</small></div>
+              <div class="stat-value">0.452<small>CI [0.448, 0.462]</small></div>
+            </div>
+          </div>
+
+          <div>
+            <p class="finding-callout">Black-classified images were underrepresented relative to census demographics across all three models tested.</p>
+            <p class="finding-callout">Imagen 4 Fast produced the lightest, most homogeneous skin tones of the three models. Stable Diffusion diverged furthest from census demographics overall, but produced the widest range of skin tones.</p>
+            <p class="finding-callout">Darker-skinned and Black-classified images were consistently more visually similar to each other than other groups' images were. This was measured by the cosine similarity of facial structure between groups and skin tone ranges.  </p>
+          </div>
+        </div>
+
+        <p class="caveat">These three models were selected to demonstrate the auditing method, not to represent the best available version of each vendor's technology. Faster, lower-cost model variants were specifically tested. Racial classification is inherently imperfect: the automated classifier's agreement with human raters was lower for Hispanic-classified images than for other categories. Full methodology, sample sizes, and limitations are in the paper.</p>
+      </div>
+    </section>
+
+    <!-- ============ TWO PATHS ============ -->
+    <section class="section" id="try-it">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Use the method</span>
+          <h2>Two ways in</h2>
+        </div>
+
+        <div class="paths">
+          <div class="path-card">
+            <span class="path-tag">No cost &middot; No account</span>
+            <h3>Try the playground</h3>
+            <ul class="path-facts">
+              <li>Generates 10 images per prompt</li>
+              <li>Results in seconds</li>
+              <li>Correct the AI's race guesses yourself</li>
+              <li>Built for classrooms and first-time visitors</li>
+            </ul>
+            <p>Pick a model and a prompt, generate ten images, and see how the results compare to census demographics.</p>
+            <a class="btn btn-secondary" href="https://huggingface.co/spaces/niftym/ProxyPlayground" target="_blank" rel="noopener">Open Proxy Playground <span class="btn-arrow">&rarr;</span></a>
+          </div>
+
+          <div class="path-card full-audit" id="audit">
+            <span class="path-tag">Paid &middot; Your own API key</span>
+            <h3>Run the full audit</h3>
+            <ul class="path-facts">
+              <li>Generates 15,000 images per run</li>
+              <li>Works on any model available on Replicate</li>
+              <li>Takes hours &mdash; images generate one at a time</li>
+              <li>Results save to a shared, public dataset</li>
+            </ul>
+            <p>Bring your own Replicate and Gemini API keys to run the complete audit suite on a model of your choice. Every run adds to a growing public record. You can visualize the results of any audit in the public dataset, check the shared results first in case someone has already audited the model you're evaluating.</p>
+            <a class="btn btn-primary" href="https://huggingface.co/spaces/niftym/AuditByProxy" target="_blank" rel="noopener">Open AuditByProxy <span class="btn-arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-cite">
+        Mucher, N.; Pham, N.; Chin, J.; Brown, A.; Evans, D. <em>A Proxy-Based Method for Measuring Racial Disparities in Text-to-Image Generators.</em> University of Virginia, 2026.
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="https://github.com/proxyaudit/proxyaudit.github.io" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://huggingface.co/spaces/niftym/ProxyPlayground" target="_blank" rel="noopener">Playground</a>
+        <a href="https://huggingface.co/spaces/niftym/AuditByProxy" target="_blank" rel="noopener">Full audit</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
