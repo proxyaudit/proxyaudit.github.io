@@ -64,3 +64,27 @@
 .path-card .btn { align-self: flex-start; margin-top: auto; }
 
 .path-card.full-audit { border-color: var(--slate-deep); }
+/* ===== Mobile fixes ===== */
+.hero { height: auto; min-height: 52rem; }
+.hero-title { height: auto; min-height: 3.45em; line-height: 1.15; }
+.hero-line, .hero-prefix, .hero-blank { height: auto; max-width: 100%; overflow-wrap: break-word; }
+
+@media (max-width: 720px) {
+  .wrap { padding-inline: 1rem; }
+  .section { padding-block: 5rem; }
+  .site-header .wrap { flex-wrap: wrap; row-gap: 0.4rem; padding-block: 0.75rem; }
+  .site-nav { display: flex; width: 100%; flex-wrap: wrap; gap: 0.35rem 1.1rem; }
+  .site-nav a { font-size: 0.72rem; }
+  html { scroll-padding-top: 6rem; }
+  .hero { height: auto; min-height: 0; padding-block: 1.75rem 5rem; }
+  .hero-content { padding-top: 1.75rem; }
+  .hero-kicker { font-size: 0.7rem; letter-spacing: 0.05em; line-height: 1.5; }
+  .hero-title { font-size: clamp(1.9rem, 1.2rem + 3.6vw, 2.75rem); max-width: none; height: auto; min-height: 5.3em; }
+  .hero-line, .hero-line:last-child, .hero-blank { height: auto; }
+  .hero-blank { white-space: normal; border-bottom-width: 2px; }
+  .hero-sub { font-size: 1.15rem; margin-bottom: 1.75rem; }
+  .hero-cta .btn, .path-card .btn { flex: 1 1 100%; align-self: stretch; justify-content: center; text-align: center; }
+  .path-card { padding: 1.75rem 1rem; }
+  .stat-row, .stat-table-head { padding: 1rem; }
+  .stat-value { font-size: 1.2rem; }
+}
